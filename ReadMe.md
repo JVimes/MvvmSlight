@@ -1,0 +1,1 @@
+MvvmSlight is a very light MVVM library for WPF.
