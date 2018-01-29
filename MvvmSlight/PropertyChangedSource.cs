@@ -12,7 +12,7 @@ namespace MvvmSlight
     ///   <see cref="INotifyPropertyChanged"/> implementation for use as a base
     ///   class.
     /// </summary>
-    public abstract class PropertyChangeSource : INotifyPropertyChanged
+    public abstract class PropertyChangedSource : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
 
