@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -48,9 +49,12 @@ namespace MvvmSlight
 
         private T ConvertObjectToT(object parameter)
         {
-            var wrongTypeButConvertible = parameter != null && !(parameter is T) && parameter is IConvertible;
-            if (wrongTypeButConvertible)
-                return (T)Convert.ChangeType(parameter, typeof(T), null);
+            if (parameter != null && !(parameter is T))
+            {
+                var converter = TypeDescriptor.GetConverter(typeof(T));
+                var canConvert = converter.CanConvertFrom(parameter.GetType());
+                if (canConvert) return (T)converter.ConvertFrom(parameter);
+            }
 
             return  (T)parameter;
         }
