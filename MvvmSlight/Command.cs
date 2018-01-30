@@ -8,44 +8,23 @@ using System.Windows.Input;
 namespace MvvmSlight
 {
     /// <summary>
-    ///   Simple ICommand implementation. Usually, bind to instances of this in
-    ///   the ViewModel.
+    ///   Simple way to implement a command handler. If you are passing a
+    ///   command parameter, use <see cref="Command{T}"/> instead. Usually, put
+    ///   an instance of this in your ViewModel and bind a control's command to
+    ///   the instance.
     /// </summary>
-    public class Command : ICommand
+    public class Command : Command<object>
     {
-        readonly Action<object> execute;
-        readonly Func<object, bool> canExecute = (p) => true;
-
         /// <param name="execute">
-        ///   The action to execute when the command is run. Is passed the
-        ///   command parameter, if one is configured.
+        ///   The action to execute when the command is run.
         /// </param>
         /// <param name="canExecute">
-        ///   Optional. Tells if the command is currently valid. Is passed the
-        ///   command parameter, if one is configured. Can cause parts of the UI
-        ///   to be grayed out.
+        ///   Optional. Tells if the command is currently valid. Can cause parts
+        ///   of the UI to be grayed out.
         /// </param>
-        public Command(Action<object> execute, Func<object, bool> canExecute = null)
-        {
-            this.execute = execute;
-            this.canExecute = canExecute ?? this.canExecute;
-        }
-
-        public event EventHandler CanExecuteChanged
-        {
-            add
-            {
-                if (canExecute == null) return;
-                CommandManager.RequerySuggested += value;
-            }
-            remove
-            {
-                if (canExecute == null) return;
-                CommandManager.RequerySuggested -= value;
-            }
-        }
-
-        bool ICommand.CanExecute(object parameter) => canExecute(parameter);
-        void ICommand.Execute(object parameter) => execute(parameter);
+        public Command(Action execute, Func<bool> canExecute = null)
+            : base(parameter => execute(),
+                  parameter => canExecute == null ? true : canExecute())
+        { }
     }
 }
