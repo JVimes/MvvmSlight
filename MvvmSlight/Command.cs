@@ -15,14 +15,15 @@ namespace MvvmSlight
     {
         readonly Action<object> execute;
         readonly Func<object, bool> canExecute = (p) => true;
-        
+
         /// <param name="execute">
-        ///   The action to execute when the command is run.
+        ///   The action to execute when the command is run. Is passed the
+        ///   command parameter, if one is configured.
         /// </param>
         /// <param name="canExecute">
-        ///   Optional. A <see cref="Func{T, TResult}"/> that tells if the
-        ///   command is currently valid. Can cause parts of the UI to be
-        ///   disabled (grayed out).
+        ///   Optional. Tells if the command is currently valid. Is passed the
+        ///   command parameter, if one is configured. Can cause parts of the UI
+        ///   to be grayed out.
         /// </param>
         public Command(Action<object> execute, Func<object, bool> canExecute = null)
         {
