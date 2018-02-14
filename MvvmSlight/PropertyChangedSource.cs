@@ -20,7 +20,10 @@ namespace MvvmSlight
         ///   For <see cref="PropertyChanged"/> firing properties with a
         ///   traditional backing field, call this inside the setter.
         /// </summary>
-        /// <typeparam name="T"> The data type of the property. </typeparam>
+        /// <typeparam name="T">
+        ///   C# infers this from the <paramref name="value"/> parameter, so you
+        ///   don't have to pass it.
+        /// </typeparam>
         /// <param name="field"> A ref to the backing field. </param>
         /// <param name="value"> The value to set the property to. </param>
         /// <param name="propertyName">
@@ -31,6 +34,7 @@ namespace MvvmSlight
         protected void Set<T>(ref T field, T value, [CallerMemberName] string propertyName = null)
         {
             if (AreEqual(field, value)) return;
+
             field = value;
             OnPropertyChanged(propertyName);
         }
@@ -39,6 +43,10 @@ namespace MvvmSlight
         ///   For <see cref="PropertyChanged"/> firing properties backed by
         ///   another property, potentially on another object.
         /// </summary>
+        /// <typeparam name="T">
+        ///   C# infers this from the <paramref name="value"/> parameter, so you
+        ///   don't have to pass it.
+        /// </typeparam>
         /// <param name="backingObject">
         ///   The object that the backing property is on.
         /// </param>
@@ -52,14 +60,15 @@ namespace MvvmSlight
         ///   is being called). The property name that will be fired by the <see
         ///   cref="PropertyChanged"/> event.
         /// </param>
-        protected void Set<T>(object backingObject, string backingPropertyName, T value,
-            [CallerMemberName] string propertyName = null)
+        protected void Set<T>(object backingObject, string backingPropertyName,
+            T value, [CallerMemberName] string propertyName = null)
         {
             var property = backingObject.GetType().GetProperty(backingPropertyName);
             if(property == null) throw new ArgumentException(
                 $"{nameof(backingPropertyName)}, \"{backingPropertyName}\", not found on {nameof(backingObject)}.");
 
             if (AreEqual(property.GetValue(backingObject), value)) return;
+
             property.SetValue(backingObject, value, null);
             OnPropertyChanged(propertyName);
         }
