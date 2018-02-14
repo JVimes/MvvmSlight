@@ -32,7 +32,7 @@ namespace MvvmSlight
         {
             if (AreEqual(field, value)) return;
             field = value;
-            FireEvent(propertyName);
+            OnPropertyChanged(propertyName);
         }
 
         /// <summary>
@@ -61,13 +61,13 @@ namespace MvvmSlight
 
             if (AreEqual(property.GetValue(backingObject), value)) return;
             property.SetValue(backingObject, value, null);
-            FireEvent(propertyName);
+            OnPropertyChanged(propertyName);
         }
 
         private static bool AreEqual<T>(T field, T value) =>
             EqualityComparer<T>.Default.Equals(field, value);
 
-        private void FireEvent(string propertyName) =>
+        private void OnPropertyChanged(string propertyName) =>
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
     }
 }
