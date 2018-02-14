@@ -29,7 +29,6 @@ namespace MvvmSlight
         /// <param name="value">
         ///   The value to set the backing field to.
         /// </param>
-        /// <param name="OnComplete"> Optional callback. </param>
         /// <param name="propertyName">
         ///   Usually leave blank (to use the name of the property whose setter
         ///   is being called). The property name that will be fired by the <see
@@ -61,7 +60,6 @@ namespace MvvmSlight
         ///   call-site, if possible.
         /// </param>
         /// <param name="value"> The value to set the property to. </param>
-        /// <param name="OnComplete"> Optional callback. </param>
         /// <param name="propertyName">
         ///   Usually leave blank (to use the name of the property whose setter
         ///   is being called). The property name that will be fired by the <see
