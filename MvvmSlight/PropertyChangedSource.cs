@@ -17,7 +17,8 @@ namespace MvvmSlight
         public event PropertyChangedEventHandler PropertyChanged;
 
         /// <summary>
-        ///   Takes the place of the boilerplate traditionally used to fire <see
+        ///   A call to this takes the place of the boilerplate traditionally
+        ///   used in a property setter to fire <see
         ///   cref="INotifyPropertyChanged.PropertyChanged"/> events. Use this
         ///   overload when the property is backed by a field.
         /// </summary>
@@ -43,7 +44,8 @@ namespace MvvmSlight
         }
 
         /// <summary>
-        ///   Takes the place of the boilerplate traditionally used to fire <see
+        ///   A call to this takes the place of the boilerplate traditionally
+        ///   used in a property setter to fire <see
         ///   cref="INotifyPropertyChanged.PropertyChanged"/> events. Use this
         ///   overload when the property is backed by another property,
         ///   potentially on another object.
