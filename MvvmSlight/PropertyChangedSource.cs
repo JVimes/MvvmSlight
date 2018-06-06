@@ -9,8 +9,8 @@ using System.Threading.Tasks;
 namespace MvvmSlight
 {
     /// <summary>
-    ///   <see cref="INotifyPropertyChanged"/> implementation for use as a base
-    ///   class.
+    ///   An <see cref="INotifyPropertyChanged"/> implementation for use as a
+    ///   base class.
     /// </summary>
     public abstract class PropertyChangedSource : INotifyPropertyChanged
     {

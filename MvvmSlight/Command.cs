@@ -10,8 +10,8 @@ namespace MvvmSlight
     /// <summary>
     ///   Simple way to implement a command handler. If you are passing a
     ///   command parameter, use <see cref="Command{T}"/> instead. Usually, put
-    ///   an instance of this in your ViewModel and bind a control's command to
-    ///   the instance.
+    ///   a property of this type in your ViewModel and bind a control's command
+    ///   to the instance.
     /// </summary>
     public class Command : Command<object>
     {

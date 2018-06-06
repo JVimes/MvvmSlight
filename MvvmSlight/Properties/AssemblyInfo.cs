@@ -8,7 +8,7 @@ using System.Windows;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("MvvmSlight")]
-[assembly: AssemblyDescription("A very lightweight MVVM library for WPF.")]
+[assembly: AssemblyDescription("A very small MVVM library for WPF.")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("John Burak")]
 [assembly: AssemblyProduct("MvvmSlight")]
