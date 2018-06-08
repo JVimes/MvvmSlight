@@ -4,6 +4,7 @@ The developer does not officially offer public support, although issue tickets m
 
 MvvmSlight is under the [MIT license][3].
 
+
 [1]: https://github.com/lbugnion/mvvmlight
 [2]: https://www.packtpub.com/application-development/windows-presentation-foundation-45-cookbook
 [3]: LICENSE.txt
