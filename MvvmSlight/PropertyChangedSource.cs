@@ -8,33 +8,38 @@ using System.Threading.Tasks;
 
 namespace MvvmSlight
 {
-    /// <summary>
-    ///   An <see cref="INotifyPropertyChanged"/> implementation for use as a
-    ///   base class.
+    /// <summary> 
+    ///   A base class for view-model and model classes. Reduces the boilerplate
+    ///   code usually required to implement and use <see
+    ///   cref="INotifyPropertyChanged"/>.
     /// </summary>
     public abstract class PropertyChangedSource : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
 
-        /// <summary>
+        /// <summary> 
         ///   A call to this takes the place of the boilerplate traditionally
         ///   used in a property setter to fire <see
         ///   cref="INotifyPropertyChanged.PropertyChanged"/> events. Use this
         ///   overload when the property is backed by a field.
         /// </summary>
-        /// <typeparam name="T">
+        /// <typeparam name="T"> 
         ///   You generally don't have to specify this. C# infers it from the
         ///   <paramref name="value"/> parameter.
         /// </typeparam>
         /// <param name="field"> A ref to the backing field. </param>
-        /// <param name="value">
+        /// <param name="value"> 
         ///   The value to set the backing field to.
         /// </param>
-        /// <param name="propertyName">
+        /// <param name="propertyName"> 
         ///   Usually leave blank (to use the name of the property whose setter
         ///   is being called). The property name that will be fired by the <see
         ///   cref="PropertyChanged"/> event.
         /// </param>
+        /// <returns> 
+        ///   True if the value changed (and event fired), else false. Useful
+        ///   when you want to bypass code when the value didn't change.
+        /// </returns>
         protected bool Set<T>(ref T field, T value, [CallerMemberName] string propertyName = null)
         {
             if (AreEqual(field, value)) return false;
@@ -43,30 +48,34 @@ namespace MvvmSlight
             return true;
         }
 
-        /// <summary>
+        /// <summary> 
         ///   A call to this takes the place of the boilerplate traditionally
         ///   used in a property setter to fire <see
         ///   cref="INotifyPropertyChanged.PropertyChanged"/> events. Use this
         ///   overload when the property is backed by another property,
         ///   potentially on another object.
         /// </summary>
-        /// <typeparam name="T">
+        /// <typeparam name="T"> 
         ///   You generally don't have to specify this. C# infers it from the
         ///   <paramref name="value"/> parameter.
         /// </typeparam>
-        /// <param name="backingObject">
+        /// <param name="backingObject"> 
         ///   The object that the backing property is on.
         /// </param>
-        /// <param name="backingPropertyName">
+        /// <param name="backingPropertyName"> 
         ///   The name of the backing property. Use C#'s "nameof" keyword at
         ///   call-site, if possible.
         /// </param>
         /// <param name="value"> The value to set the property to. </param>
-        /// <param name="propertyName">
+        /// <param name="propertyName"> 
         ///   Usually leave blank (to use the name of the property whose setter
         ///   is being called). The property name that will be fired by the <see
         ///   cref="PropertyChanged"/> event.
         /// </param>
+        /// <returns> 
+        ///   True if the value changed (and event fired), else false. Useful
+        ///   when you want to bypass code when the value didn't change.
+        /// </returns>
         protected bool Set<T>(object backingObject, string backingPropertyName,
             T value, [CallerMemberName] string propertyName = null)
         {
