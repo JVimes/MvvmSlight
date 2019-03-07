@@ -92,7 +92,17 @@ namespace MvvmSlight
 
         static bool AreEqual<T>(T field, T value) => EqualityComparer<T>.Default.Equals(field, value);
 
-        void OnPropertyChanged(string propertyName) =>
+        /// <summary>
+        ///   Usually, use one of the Set methods instead of calling this
+        ///   directly. That way, code in your setter always coincides with the
+        ///   PropertyChanged event. But if you must manually fire
+        ///   PropertyChanged, call this.
+        /// </summary>
+        /// <param name="propertyName">
+        ///   The name of the property to fire PropertyChanged for. Leave blank
+        ///   to use the name of a property that called this.
+        /// </param>
+        protected void OnPropertyChanged([CallerMemberName] string propertyName = null) =>
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
     }
 }
