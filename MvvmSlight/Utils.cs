@@ -9,7 +9,7 @@ namespace MvvmSlight
 {
     public static class Utils
     {
-        public static bool RunningInXamlDesigner { get; } =
+        public static bool RunningInDesigner { get; } =
             DesignerProperties.GetIsInDesignMode(new System.Windows.DependencyObject());
     }
 }
