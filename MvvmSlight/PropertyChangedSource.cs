@@ -10,8 +10,7 @@ namespace MvvmSlight
 {
     /// <summary> 
     ///   A base class for view-model and model classes. Reduces the boilerplate
-    ///   code usually required to implement and use <see
-    ///   cref="INotifyPropertyChanged"/>.
+    ///   usually required to implement <see cref="INotifyPropertyChanged"/>.
     /// </summary>
     public abstract class PropertyChangedSource : INotifyPropertyChanged
     {
@@ -19,6 +18,7 @@ namespace MvvmSlight
         ///   See <see cref="INotifyPropertyChanged.PropertyChanged"/>.
         /// </summary>
         public event PropertyChangedEventHandler PropertyChanged;
+
 
         /// <summary> 
         ///   A call to this takes the place of the boilerplate traditionally
@@ -35,19 +35,22 @@ namespace MvvmSlight
         ///   The value to set the backing field to.
         /// </param>
         /// <param name="propertyName"> 
-        ///   Usually leave blank (to use the name of the property whose setter
-        ///   is being called). The property name that will be fired by the <see
-        ///   cref="PropertyChanged"/> event.
+        ///   Usually don't pass this. Default is the name of the property whose
+        ///   setter is being called. This specifies the property name that the
+        ///   <see cref="PropertyChanged"/> event will contain.
         /// </param>
         /// <returns> 
         ///   True if the value changed (and event fired), else false. Useful
         ///   when you want to bypass code when the value didn't change.
         /// </returns>
-        protected bool Set<T>(ref T field, T value, [CallerMemberName] string propertyName = null)
+        protected bool Set<T>(ref T field,
+                              T value,
+                              [CallerMemberName] string propertyName = null)
         {
             if (AreEqual(field, value)) return false;
+
             field = value;
-            OnPropertyChanged(propertyName);
+            RaisePropertychanged(propertyName);
             return true;
         }
 
@@ -71,44 +74,51 @@ namespace MvvmSlight
         /// </param>
         /// <param name="value"> The value to set the property to. </param>
         /// <param name="propertyName"> 
-        ///   Usually leave blank (to use the name of the property whose setter
-        ///   is being called). The property name that will be fired by the <see
-        ///   cref="PropertyChanged"/> event.
+        ///   Usually don't pass this. Default is the name of the property whose
+        ///   setter is being called. This specifies the property name that the
+        ///   <see cref="PropertyChanged"/> event will contain.
         /// </param>
         /// <returns> 
         ///   True if the value changed (and event fired), else false. Useful
         ///   when you want to bypass code when the value didn't change.
         /// </returns>
-        protected bool Set<T>(object backingObject, string backingPropertyName,
-            T value, [CallerMemberName] string propertyName = null)
+        protected bool Set<T>(object backingObject,
+                              string backingPropertyName,
+                              T value,
+                              [CallerMemberName] string propertyName = null)
         {
             if (backingObject is null)
                 throw new ArgumentNullException(nameof(backingObject));
 
             var property = backingObject.GetType().GetProperty(backingPropertyName);
-            if (property == null) throw new ArgumentException(
-                $"{nameof(backingPropertyName)}, \"{backingPropertyName}\", not found on {nameof(backingObject)}.");
-            var backingValue = property.GetValue(backingObject);
+            if (property == null)
+                throw new ArgumentException(
+                    $"{nameof(backingPropertyName)}, \"{backingPropertyName}\", not found on {nameof(backingObject)}.");
 
+            var backingValue = property.GetValue(backingObject);
             if (AreEqual(backingValue, value)) return false;
+
             property.SetValue(backingObject, value, null);
-            OnPropertyChanged(propertyName);
+            RaisePropertychanged(propertyName);
             return true;
         }
 
-        static bool AreEqual<T>(T field, T value) => EqualityComparer<T>.Default.Equals(field, value);
-
-        /// <summary>
-        ///   Usually, use one of the Set methods instead of calling this
-        ///   directly. That way, code in your setter always coincides with the
-        ///   PropertyChanged event. But if you must manually fire
-        ///   PropertyChanged, call this.
+        /// <summary> 
+        ///   Use this when the Set overloads are inadequate. This lets you
+        ///   raise the PropertyChanged event manually. Call this within a
+        ///   property's setter so that the setter code coincides with the <see
+        ///   cref="PropertyChanged"/> event.
         /// </summary>
-        /// <param name="propertyName">
-        ///   The name of the property to fire PropertyChanged for. Leave blank
-        ///   to use the name of a property that called this.
+        /// <param name="propertyName"> 
+        ///   Usually don't pass this. Default is the name of the property whose
+        ///   setter is being called. This specifies the property name that the
+        ///   <see cref="PropertyChanged"/> event will contain.
         /// </param>
-        protected void OnPropertyChanged([CallerMemberName] string propertyName = null) =>
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        protected void RaisePropertychanged([CallerMemberName] string propertyName = null)
+            => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+
+
+        static bool AreEqual<T>(T field, T value)
+            => EqualityComparer<T>.Default.Equals(field, value);
     }
 }

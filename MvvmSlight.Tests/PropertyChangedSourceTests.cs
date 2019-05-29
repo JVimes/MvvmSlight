@@ -15,43 +15,56 @@ namespace MvvmSlight.Tests
                 set => SetResult = Set(ref theProperty, value);
             }
 
+            public string PropertyWithManuallyRaisedEvent
+            {
+                get => null;
+                set => RaisePropertychanged();
+            }
+
+
             public bool SetResult { get; set; }
             internal string ThePropertyBackingField => theProperty;
         }
 
+
         [TestMethod]
-        public void SetChangesBackingField()
+        public void Set_ChangesBackingField()
         {
             var viewModel = new FakeViewModel();
             var newValue = "NewValue";
+
             viewModel.TheProperty = newValue;
 
             Assert.AreEqual(newValue, viewModel.ThePropertyBackingField);
         }
 
         [TestMethod]
-        public void SetFiresEventOnChange()
+        public void Set_FiresEventOnChange()
         {
             var viewModel = new FakeViewModel();
-            string propertyNameFired = null;
-            viewModel.PropertyChanged += (s, e) => propertyNameFired = e.PropertyName;
+            string nameOfPropertyRaised = null;
+            viewModel.PropertyChanged += (s, e) => nameOfPropertyRaised = e.PropertyName;
+
             viewModel.TheProperty = "NewValue";
-            Assert.AreEqual(nameof(FakeViewModel.TheProperty), propertyNameFired);
+
+            Assert.AreEqual(nameof(FakeViewModel.TheProperty), nameOfPropertyRaised);
         }
 
         [TestMethod]
-        public void SetDoesNotFireEventOnNoChange()
+        public void Set_DoesNotFireEventOnNoChange()
         {
             var viewModel = new FakeViewModel();
             viewModel.TheProperty = "NewValue";
-            string propertyNameFired = null;
-            viewModel.PropertyChanged += (s, e) => propertyNameFired = e.PropertyName;
+            bool propertyWasRaised = false;
+            viewModel.PropertyChanged += (s, e) => propertyWasRaised = true;
+
             viewModel.TheProperty = "NewValue";
-            Assert.IsNull(propertyNameFired);
+
+            Assert.IsFalse(propertyWasRaised);
         }
 
         [TestMethod]
-        public void SetReturnsCorrectBoolOnChange()
+        public void Set_ReturnsCorrectBoolOnChange()
         {
             var viewModel = new FakeViewModel();
             viewModel.TheProperty = "NewValue";
@@ -59,12 +72,26 @@ namespace MvvmSlight.Tests
         }
 
         [TestMethod]
-        public void SetReturnsCorrectBoolOnNoChange()
+        public void Set_ReturnsCorrectBoolOnNoChange()
         {
             var viewModel = new FakeViewModel();
+
             viewModel.TheProperty = "NewValue";
             viewModel.TheProperty = "NewValue"; // On purpose
+
             Assert.IsFalse(viewModel.SetResult);
+        }
+
+        [TestMethod]
+        public void RaisePropertychanged_RaisesEvent()
+        {
+            var viewModel = new FakeViewModel();
+            string nameOfPropertyRaised = null;
+            viewModel.PropertyChanged += (s, e) => nameOfPropertyRaised = e.PropertyName;
+
+            viewModel.PropertyWithManuallyRaisedEvent = "NewValue";
+
+            Assert.AreEqual(nameof(FakeViewModel.PropertyWithManuallyRaisedEvent), nameOfPropertyRaised);
         }
     }
 }
