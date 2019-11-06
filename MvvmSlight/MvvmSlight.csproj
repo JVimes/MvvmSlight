@@ -4,7 +4,7 @@
     <TargetFrameworks>netcoreapp3.1;net462</TargetFrameworks>
     <UseWPF>true</UseWPF>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
-    <Version>4.0.0</Version>
+    <Version>4.1.0</Version>
     <Description>A very small MVVM library for WPF.</Description>
     <Authors>John Burak</Authors>
     <Copyright>Copyright © 2018 John Burak</Copyright>

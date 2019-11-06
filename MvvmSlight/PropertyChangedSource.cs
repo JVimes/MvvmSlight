@@ -103,22 +103,24 @@ namespace MvvmSlight
             return true;
         }
 
-        /// <summary> 
-        ///   Use this when the Set overloads are inadequate. This lets you
-        ///   raise the PropertyChanged event manually. Call this within a
-        ///   property's setter so that the setter code coincides with the <see
-        ///   cref="PropertyChanged"/> event.
+        /// <summary>
+        ///   Useful when the Set methods are inadequate. This lets you raise
+        ///   the PropertyChanged event manually. Calling this within a
+        ///   property's setter ensures the setter's code coincides with the
+        ///   <see cref="PropertyChanged"/> event.
         /// </summary>
-        /// <param name="propertyName"> 
-        ///   Usually don't pass this. Default is the name of the property whose
-        ///   setter is being called. This specifies the property name that the
-        ///   <see cref="PropertyChanged"/> event will contain.
+        /// <param name="propertyName">
+        ///   Usually don't pass this. Default is the name of the property
+        ///   whose setter is being called. This specifies the property name
+        ///   that the <see cref="PropertyChanged"/> event will contain.
         /// </param>
         protected void RaisePropertychanged([CallerMemberName] string propertyName = null)
             => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 
-
-        static bool AreEqual<T>(T field, T value)
-            => EqualityComparer<T>.Default.Equals(field, value);
+        /// <summary>
+        ///   Checks equality the same way the Set methods do.
+        /// </summary>
+        protected static bool AreEqual<T>(T value1, T value2)
+            => EqualityComparer<T>.Default.Equals(value1, value2);
     }
 }
