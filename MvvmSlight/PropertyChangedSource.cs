@@ -15,6 +15,9 @@ namespace MvvmSlight
     /// </summary>
     public abstract class PropertyChangedSource : INotifyPropertyChanged
     {
+        /// <summary>
+        ///   See <see cref="INotifyPropertyChanged.PropertyChanged"/>.
+        /// </summary>
         public event PropertyChangedEventHandler PropertyChanged;
 
         /// <summary> 
@@ -79,6 +82,9 @@ namespace MvvmSlight
         protected bool Set<T>(object backingObject, string backingPropertyName,
             T value, [CallerMemberName] string propertyName = null)
         {
+            if (backingObject is null)
+                throw new ArgumentNullException(nameof(backingObject));
+
             var property = backingObject.GetType().GetProperty(backingPropertyName);
             if (property == null) throw new ArgumentException(
                 $"{nameof(backingPropertyName)}, \"{backingPropertyName}\", not found on {nameof(backingObject)}.");

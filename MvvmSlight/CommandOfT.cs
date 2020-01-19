@@ -34,13 +34,20 @@ namespace MvvmSlight
             this.canExecute = canExecute ?? this.canExecute;
         }
 
+        /// <summary>
+        ///   Defaults to <see cref="CommandManager.RequerySuggested"/>. See
+        ///   <see cref="ICommand.CanExecuteChanged"/>.
+        /// </summary>
         public event EventHandler CanExecuteChanged
         {
             add => CommandManager.RequerySuggested += value;
             remove => CommandManager.RequerySuggested -= value;
         }
 
+        /// <summary> See <see cref="ICommand.CanExecute(object)"/>. </summary>
         public bool CanExecute(object parameter) => canExecute(ConvertObjectToT(parameter));
+
+        /// <summary> See <see cref="ICommand.Execute(object)"/>. </summary>
         public void Execute(object parameter) => execute(ConvertObjectToT(parameter));
 
         private T ConvertObjectToT(object parameter)
@@ -52,7 +59,7 @@ namespace MvvmSlight
                 if (canConvert) return (T)converter.ConvertFrom(parameter);
             }
 
-            return  (T)parameter;
+            return (T)parameter;
         }
     }
 }

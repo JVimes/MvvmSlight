@@ -7,8 +7,10 @@ using System.Threading.Tasks;
 
 namespace MvvmSlight
 {
+    /// <summary> </summary>
     public static class Utils
     {
+        /// <summary> Tells if running in the XAML designer </summary>
         public static bool RunningInDesigner { get; } =
             DesignerProperties.GetIsInDesignMode(new System.Windows.DependencyObject());
     }
