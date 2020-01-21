@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
@@ -103,6 +104,7 @@ namespace MvvmSlight
             return true;
         }
 
+
         /// <summary>
         ///   Useful when the Set methods are inadequate. This lets you raise
         ///   the PropertyChanged event manually. Calling this within a
@@ -114,6 +116,7 @@ namespace MvvmSlight
         ///   whose setter is being called. This specifies the property name
         ///   that the <see cref="PropertyChanged"/> event will contain.
         /// </param>
+        [SuppressMessage("Design", "CA1030:Use events where appropriate", Justification = ".NET doesn't allow subclass to fire events")]
         protected void RaisePropertychanged([CallerMemberName] string propertyName = null)
             => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 
