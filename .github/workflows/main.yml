@@ -1,0 +1,26 @@
+name: Build
+on:
+  push:
+    branches: '**'
+    tags-ignore: '**'
+    paths-ignore:
+      - '*'
+      - '!*.sln'
+      - '!.editorconfig'
+      - '!logo.png'
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Setup .NET Core
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 3.1.100
+    - name: Build with dotnet
+      run: dotnet build --configuration Release
+    - name: Save build output
+      uses: actions/upload-artifact@v1.0.0
+      with:
+        name: BuildOutput
+        path: MvvmSlight\bin\Release
