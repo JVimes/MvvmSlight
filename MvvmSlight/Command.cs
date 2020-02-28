@@ -8,10 +8,10 @@ using System.Windows.Input;
 namespace MvvmSlight
 {
     /// <summary>
-    ///   Simple way to implement a command handler. If you are passing a
-    ///   command parameter, use <see cref="Command{T}"/> instead. Usually, put
-    ///   a property of this type in your ViewModel and bind a control's command
-    ///   to it.
+    ///   Simple way to implement a command handler. Usually, put a property of
+    ///   this type in your ViewModel and bind a control's command to it. If
+    ///   you are passing a command parameter, use <see cref="Command{T}"/>
+    ///   instead.
     /// </summary>
     public class Command : Command<object>
     {
@@ -19,10 +19,10 @@ namespace MvvmSlight
         ///   The action to execute when the command is run.
         /// </param>
         /// <param name="canExecute">
-        ///   Optional. Tells if the command is currently valid. Can cause parts
-        ///   of the UI to be grayed out.
+        ///   Optional. Returns if the command is currently valid. Can cause
+        ///   the control to be disabled.
         /// </param>
-        public Command(Action execute, Func<bool> canExecute = null)
+        public Command(Action execute, Func<bool>? canExecute = null)
             : base(parameter => execute(),
                   parameter => canExecute == null ? true : canExecute())
         { }

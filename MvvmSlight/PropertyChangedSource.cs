@@ -18,7 +18,7 @@ namespace MvvmSlight
         /// <summary>
         ///   See <see cref="INotifyPropertyChanged.PropertyChanged"/>.
         /// </summary>
-        public event PropertyChangedEventHandler PropertyChanged;
+        public event PropertyChangedEventHandler? PropertyChanged;
 
 
         /// <summary> 
@@ -46,7 +46,7 @@ namespace MvvmSlight
         /// </returns>
         protected bool Set<T>(ref T field,
                               T value,
-                              [CallerMemberName] string propertyName = null)
+                              [CallerMemberName] string? propertyName = null)
         {
             if (AreEqual(field, value)) return false;
 
@@ -86,7 +86,7 @@ namespace MvvmSlight
         protected bool Set<T>(object backingObject,
                               string backingPropertyName,
                               T value,
-                              [CallerMemberName] string propertyName = null)
+                              [CallerMemberName] string? propertyName = null)
         {
             if (backingObject is null)
                 throw new ArgumentNullException(nameof(backingObject));
@@ -97,7 +97,7 @@ namespace MvvmSlight
                     $"{nameof(backingPropertyName)}, \"{backingPropertyName}\", not found on {nameof(backingObject)}.");
 
             var backingValue = property.GetValue(backingObject);
-            if (AreEqual(backingValue, value)) return false;
+            if (AreEqual(backingValue, value!)) return false;
 
             property.SetValue(backingObject, value, null);
             RaisePropertychanged(propertyName);
@@ -117,7 +117,7 @@ namespace MvvmSlight
         ///   that the <see cref="PropertyChanged"/> event will contain.
         /// </param>
         [SuppressMessage("Design", "CA1030:Use events where appropriate", Justification = ".NET doesn't allow subclass to fire events")]
-        protected void RaisePropertychanged([CallerMemberName] string propertyName = null)
+        protected void RaisePropertychanged([CallerMemberName] string? propertyName = null)
             => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 
         /// <summary>

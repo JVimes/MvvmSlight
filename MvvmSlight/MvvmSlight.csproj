@@ -3,17 +3,19 @@
   <PropertyGroup>
     <TargetFrameworks>netcoreapp3.1;net462</TargetFrameworks>
     <UseWPF>true</UseWPF>
+    <Nullable>enable</Nullable>
+    <LangVersion>latest</LangVersion>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
-    <Version>4.1.0</Version>
+    <Version>4.1.1</Version>
     <Description>A very small MVVM library for WPF.</Description>
     <Authors>John Burak</Authors>
-    <Copyright>Copyright © 2018 John Burak</Copyright>
-    <PackageProjectUrl>https://github.com/JVimes/MvvmSlight</PackageProjectUrl>
-    <RepositoryUrl>https://github.com/JVimes/MvvmSlight.git</RepositoryUrl>
     <PackageLicenseExpression>MIT-0</PackageLicenseExpression>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <IncludeSymbols>true</IncludeSymbols>
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+    <PackageProjectUrl>https://github.com/JVimes/MvvmSlight</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/JVimes/MvvmSlight.git</RepositoryUrl>
+    <Copyright>Copyright © 2018 John Burak</Copyright>
     <PackageIcon>logo.png</PackageIcon>
     <PackageIconUrl />
   </PropertyGroup>
