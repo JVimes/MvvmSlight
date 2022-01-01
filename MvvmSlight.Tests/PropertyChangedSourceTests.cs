@@ -18,11 +18,10 @@ namespace MvvmSlight.Tests
             public string PropertyWithManuallyRaisedEvent
             {
                 get => null;
-                set => RaisePropertychanged();
+                set => RaisePropertyChanged();
             }
 
-
-            public bool SetResult { get; set; }
+            public bool SetResult { get; private set; }
             internal string ThePropertyBackingField => theProperty;
         }
 

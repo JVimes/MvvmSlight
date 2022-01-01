@@ -51,7 +51,7 @@ namespace MvvmSlight
             if (AreEqual(field, value)) return false;
 
             field = value;
-            RaisePropertychanged(propertyName);
+            RaisePropertyChanged(propertyName);
             return true;
         }
 
@@ -100,10 +100,9 @@ namespace MvvmSlight
             if (AreEqual(backingValue, value!)) return false;
 
             property.SetValue(backingObject, value, null);
-            RaisePropertychanged(propertyName);
+            RaisePropertyChanged(propertyName);
             return true;
         }
-
 
         /// <summary>
         ///   Useful when the Set methods are inadequate. This lets you raise
@@ -116,8 +115,8 @@ namespace MvvmSlight
         ///   whose setter is being called. This specifies the property name
         ///   that the <see cref="PropertyChanged"/> event will contain.
         /// </param>
-        [SuppressMessage("Design", "CA1030:Use events where appropriate", Justification = ".NET doesn't allow subclass to fire events")]
-        protected void RaisePropertychanged([CallerMemberName] string? propertyName = null)
+        [SuppressMessage("Design", "CA1030:Use events where appropriate", Justification = ".NET doesn't allow derived class to fire base class event")]
+        protected void RaisePropertyChanged([CallerMemberName] string? propertyName = null)
             => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 
         /// <summary>
